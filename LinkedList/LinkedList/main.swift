@@ -23,6 +23,9 @@ stringList.append(value: "Elephant")
 stringList.append(value: "Bear")
 print(stringList.description)
 
+_ = stringList.remove(value: "Lion")
+print(stringList.description)
+
 let intList = LinkedList<Int>()
 intList.append(value: 10)
 intList.append(value: 5)

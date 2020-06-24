@@ -53,7 +53,7 @@ public class LinkedList<T: Equatable & Comparable> {
         }
 
         if head?.value == value {
-            head = nil
+            head = head?.next
             return true
         }
 
