@@ -46,6 +46,27 @@ class BinarySearchTree<T: Comparable> {
         root = insert(newValue: newValue, node: root)
     }
 
+    func search(value: T) -> Node<T>? {
+        return search(value: value, node: root)
+    }
+
+    func delete(value: T) {
+        root = delete(value: value, node: root)
+    }
+
+    private func search(value: T, node: Node<T>?) -> Node<T>? {
+
+        if node == nil || node?.value == value {
+            return node
+        }
+
+        if value < node!.value {
+            return search(value: value, node: node?.left)
+        }
+
+        return search(value: value, node: node?.right)
+    }
+
     private func count(node: Node<T>?) -> Int {
 
         if node == nil {
@@ -101,6 +122,46 @@ class BinarySearchTree<T: Comparable> {
         printPostOrder(node: node!.left)
         printPostOrder(node: node!.right)
         print("\(node!.value) ", terminator:"")
+    }
+
+    private func minValue(from node: Node<T>) -> Node<T> {
+
+        var current = node
+        while(current.left != nil) {
+            current = current.left!
+        }
+
+        return current
+    }
+
+    private func delete(value: T, node: Node<T>?) -> Node<T>? {
+
+        if node == nil {
+            return node
+        }
+
+        if value < node!.value {
+            node?.left = delete(value: value, node: node?.left)
+        } else if value > node!.value {
+            node?.right = delete(value: value, node: node?.right)
+        } else {
+
+            if node?.left == nil {
+                let temp = node?.right
+                node?.right = nil
+                return temp
+            } else if node?.right == nil {
+                let temp = node?.left
+                node?.left = nil
+                return temp
+            }
+
+            let temp = minValue(from: node!.right!)
+            node?.value = temp.value
+            node?.right = delete(value: temp.value, node: node?.right)
+        }
+
+        return node
     }
 
 }
